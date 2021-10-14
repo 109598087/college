@@ -54,3 +54,5 @@ df = pd.DataFrame({
 })
 
 df.to_csv('college.csv', mode='a', header=False, index=False)
+
+

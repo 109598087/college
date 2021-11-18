@@ -31,8 +31,13 @@ Select(driver.find_element(By.XPATH, "//*[contains(@id, 'LPM_sel_gsdgroup')]")).
 driver.find_element(By.XPATH, "//*[contains(@id, 'SelGsdName')]").click()
 option_element_list2 = driver.find_elements(By.XPATH, "//*[contains(@id, 'SelGsdName')]//option[contains(@value, '')]")
 print(len(option_element_list2))
-xdd_value_list = get_option_value_list(option_element_list2)
-print(xdd_value_list)
+department_value_list = get_option_value_list(option_element_list2)
+print(department_value_list)
+Select(driver.find_element(By.XPATH, "//*[contains(@id, 'SelGsdName')]")).select_by_value("1")
+
+driver.find_element(By.XPATH,
+                    "//*[contains(@id, 'LPM_form_gsdgroup')]//*[contains(@class, 'btn') and text()='查詢']").click()
+
 
 # # get 學程
 # SelGsdName

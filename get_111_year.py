@@ -23,10 +23,16 @@ driver.maximize_window()
 # get discipline_cluster_list
 driver.find_element(By.XPATH,
                     "//*[contains(@class, 'mb-0')]//*[contains(@class, 'btn btn-link') and contains(text(), '學群')]").click()
-option_element_list = driver.find_elements(By.XPATH, "//*[contains(text(), '學群')]")
-discipline_cluster_value_list = get_option_value_list(option_element_list)
+option_element_list1 = driver.find_elements(By.XPATH, "//*[contains(text(), '學群')]")
+discipline_cluster_value_list = get_option_value_list(option_element_list1)
 print(discipline_cluster_value_list)
-Select(driver.find_element(By.XPATH, "//*[contains(@id, 'LPM_sel_gsdgroup')]")).select_by_value("0")
+Select(driver.find_element(By.XPATH, "//*[contains(@id, 'LPM_sel_gsdgroup')]")).select_by_value("1")
+
+driver.find_element(By.XPATH, "//*[contains(@id, 'SelGsdName')]").click()
+option_element_list2 = driver.find_elements(By.XPATH, "//*[contains(@id, 'SelGsdName')]//option[contains(@value, '')]")
+print(len(option_element_list2))
+xdd_value_list = get_option_value_list(option_element_list2)
+print(xdd_value_list)
 
 # # get 學程
 # SelGsdName

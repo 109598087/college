@@ -59,7 +59,7 @@ for discipline_cluster_value in discipline_cluster_value_list:
             driver.find_element(By.XPATH,
                                 "//div[contains(text(), " + "\"" + school.split('-')[
                                     1] + "\"" + ") and contains(@style, 'font-size:1.1em;text-align:left;margin:0px auto;width:70%;')]").click()
-
+            time.sleep(1)
             driver.find_element(By.XPATH, "//*[contains(@class, 'LPM_colgsd_txt') and contains(text(), " + "\"" +
                                 school.split('-')[1] + "\"" + ")]//parent::a").click()
             driver.switch_to.window(driver.window_handles[2])
@@ -70,7 +70,9 @@ for discipline_cluster_value in discipline_cluster_value_list:
             driver.switch_to.window(driver.window_handles[1])
         driver.close()
         driver.switch_to.window(driver.window_handles[0])
-    discipline_cluster_value_url[discipline_cluster_value] = url_list
-# 抓文字
-df = pd.DataFrame(discipline_cluster_value_url)
-df.to_csv('111_school_url.csv', index=False)
+    # discipline_cluster_value_url[discipline_cluster_value] = url_list
+
+    df = pd.DataFrame({
+        discipline_cluster_value: url_list
+    })
+    df.to_csv(discipline_cluster_value + '111_school_url.csv', index=False)

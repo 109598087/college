@@ -1,3 +1,4 @@
+import re
 import time
 
 import pandas as pd
@@ -47,19 +48,20 @@ for discipline_cluster_value in discipline_cluster_value_list:
     department_value_list = get_option_value_list(option_element_list2)
     # print(department_value_list)
     url_list = list()
-    # for department_value in department_value_list:
-    #     # print(department_value_list)
-    #     Select(driver.find_element(By.XPATH, "//*[contains(@name, 'GsdName')]")).select_by_value(department_value)
-    #
-    #     driver.find_element(By.XPATH, "//*[contains(@name, 'query')]").click()
-    #
-    #     college_id_element_list = driver.find_elements(By.XPATH, "//*[contains(text(), '(') and contains(text(), ')')]")
-    #     for college_id_element in college_id_element_list:
-    #         all_college_id_list.append(college_id_element.text.replace('(', '').replace(')', ''))
-    #         print(college_id_element.text.replace('(', '').replace(')', ''))
-    #     driver.find_element(By.XPATH, "//input[@value='回上一頁']").click()
+    for department_value in department_value_list:
+        # print(department_value_list)
+        Select(driver.find_element(By.XPATH, "//*[contains(@name, 'GsdName')]")).select_by_value(department_value)
+
+        driver.find_element(By.XPATH, "//*[contains(@name, 'query')]").click()
+
+        college_id_element_list = driver.find_elements(By.XPATH, "//*[contains(text(), '(') and contains(text(), ')')]")
+        for college_id_element in college_id_element_list:
+            all_college_id_list.append(college_id_element.text.replace('(', '').replace(')', ''))
+            print(college_id_element.text.replace('(', '').replace(')', ''))
+        driver.find_element(By.XPATH, "//input[@value='回上一頁']").click()
     driver.get('https://www.cac.edu.tw/apply111/system/0ColQry_for111apply_8fr51gfw/findgsdgroup.htm')
 print(all_college_id_list)
+all_college_id_list = [re.findall(r'-?\d+\.?\d*', college_id)[0] for college_id in all_college_id_list]
 pd.DataFrame({
     'college_id': all_college_id_list,
 }).to_csv('college_id.csv', index=False)

@@ -62,11 +62,12 @@ for discipline_cluster_value in discipline_cluster_value_list:
     driver.get('https://www.cac.edu.tw/apply111/system/0ColQry_for111apply_8fr51gfw/findgsdgroup.htm')
 
     print(all_college_id_list)
+    all_college_id_list_ = list()
     for college_id in all_college_id_list:
         if len(re.findall(r'-?\d+\.?\d*', college_id)) != 0:
-            all_college_id_list += re.findall(r'-?\d+\.?\d*', college_id)
+            all_college_id_list_ += re.findall(r'-?\d+\.?\d*', college_id)
     pd.DataFrame({
-        'college_id': all_college_id_list,
+        'college_id': all_college_id_list_,
     }).to_csv(discipline_cluster_value.text + 'college_id.csv', index=False)
 
 # driver.find_element(By.XPATH,

@@ -64,7 +64,6 @@ print(all_college_id_list)
 for college_id in all_college_id_list:
     if len(re.findall(r'-?\d+\.?\d*', college_id)) != 0:
         all_college_id_list += re.findall(r'-?\d+\.?\d*', college_id)
-all_college_id_list = list(set(all_college_id_list))
 pd.DataFrame({
     'college_id': all_college_id_list,
 }).to_csv('college_id.csv', index=False)

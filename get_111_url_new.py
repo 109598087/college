@@ -28,6 +28,7 @@ driver.maximize_window()
 option_element_list = driver.find_elements(By.XPATH, "//*[contains(text(), '學群')]")
 print(option_element_list)
 discipline_cluster_value_list = get_option_value_list(option_element_list)
+# discipline_cluster_value_list : ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
 print(discipline_cluster_value_list)
 
 discipline_cluster_value_url = dict()
@@ -68,7 +69,7 @@ for discipline_cluster_value in discipline_cluster_value_list:
             all_college_id_list_ += re.findall(r'-?\d+\.?\d*', college_id)
     pd.DataFrame({
         'college_id': all_college_id_list_,
-    }).to_csv(discipline_cluster_value.text + 'college_id.csv', index=False)
+    }).to_csv(discipline_cluster_value + 'college_id.csv', index=False)
 
 # driver.find_element(By.XPATH,
 #                     "//*[contains(@id, 'LPM_form_gsdgroup')]//*[contains(@class, 'btn') and text()='查詢']").click()

@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
-
 driver = webdriver.Chrome('chromedriver.exe')
 driver.implicitly_wait(5)
 driver.get('https://www.google.com/')
@@ -21,10 +20,15 @@ for i in range(1, 133):
 
     driver.get(url_discipline)
     driver.find_element(By.XPATH, "//*[contains(@data, 'tab4default')]").click()
-    department_list = driver.find_elements(By.XPATH, "//*[contains(@id, 'table')]//tr")
+    department_element_list = driver.find_elements(By.XPATH, "//*[contains(@id, 'table')]//tr")
     # 學類裡的各校系
-    index_list = list()
-    for department in department_list:
+    row_index_list = list()
+    discipline_list = list()
+    department_list = list()
+    discipline_value1 = ''
+    discipline_value2 = ''
+    # 一個一個抓網頁上的校系
+    for department in department_element_list:
         department_value = department.text.split()
         # 校系名
         department_value1 = department_value[0]
@@ -33,10 +37,10 @@ for i in range(1, 133):
             continue
         print('29', department_value1, department_value2)
 
-        discipline_value1 = ''
-        discipline_value2 = ''
         # 找到對應的1 or 2學群
-        key_dict = {'資訊學群': 'A', '工程學群': 'B', '數理化學群': 'C', '醫藥衛生學群': 'D', '生命科學學群': 'E', '生物資源學群': 'F', '地球環境學群': 'G', '建築設計學群': 'H', '藝術學群': 'I', '社會心理學群': 'J', '大眾傳播學群': 'K', '外語學群': 'L', '文史哲學群': 'M', '教育學群': 'N', '法政學群': 'O', '管理學群': 'P', '財經學群': 'Q', '遊憩運動學群': 'R'}
+        key_dict = {'資訊學群': 'A', '工程學群': 'B', '數理化學群': 'C', '醫藥衛生學群': 'D', '生命科學學群': 'E', '生物資源學群': 'F', '地球環境學群': 'G',
+                    '建築設計學群': 'H', '藝術學群': 'I', '社會心理學群': 'J', '大眾傳播學群': 'K', '外語學群': 'L', '文史哲學群': 'M', '教育學群': 'N',
+                    '法政學群': 'O', '管理學群': 'P', '財經學群': 'Q', '遊憩運動學群': 'R'}
         for j in range(0, 127):
             print('36', df.iat[j, 1])
             if df.iat[j, 2] in key_dict.keys():
@@ -51,22 +55,24 @@ for i in range(1, 133):
         # 找到第一個學群csv
         if discipline_value1 is not '':
             df_discipline1 = pd.read_csv(discipline_value1 + '_college_rule.csv')
-            print(df_discipline1)
-            print('size', df_discipline1.shape[0])
-            for k in range(df_discipline1.shape[0]):
-                if df_discipline1.iat[k, 0] == department_value1 and df_discipline1.iat[k, 1] == department_value2:
-                    print('same1', department_value1, department_value2)
-                    found = 1
-                    break
-        # 找到第二個學群csv
-        if not found and discipline_value2 is not '':
-            df_discipline2 = pd.read_csv(discipline_value2 + '_college_rule.csv')
-            print(df_discipline2)
-            for k in range(df_discipline2.shape[0]):
-                if df_discipline2.iat[k, 0] == department_value1 and df_discipline2.iat[k, 1] == department_value2:
-                    print('same2', department_value1, department_value2)
-                    found = 1
-                    break
+            row_index = df_discipline1.index[(df_discipline1['college_name'] == department_value1) & (
+                        df_discipline1['department_name'] == department_value2)].to_list()
+            if len(row_index) > 0:
+                row_index_list.append(row_index[0])
+                discipline_list.append(department_value1)
+                department_list.append(department_value2)
 
-        if not found:
-            print('not found', department_value1, department_value2)
+    df_discipline1 = pd.read_csv(discipline_value1 + '_college_rule.csv')
+
+    df_discipline1.iloc[row_index_list].to_csv(str(i) + '_college_rule_126.csv', index=False)
+
+    # 加上 found
+    df_discipline1['found'] = [0 for i in range(len(df_discipline1['college_name']))]
+    for a in range(len(department_list)):
+        row_index = df_discipline1.index[(df_discipline1['college_name'] == discipline_list[a])
+                                         & (df_discipline1['department_name'] == department_list[a])]
+        column_index = df_discipline1.columns.get_loc("found")
+        df_discipline1.iloc[row_index, column_index] = 1
+    print('hihi')
+    print(df_discipline1)
+    df_discipline1.to_csv(str(i) + 'new_df_college_rule_126.csv', index=False)

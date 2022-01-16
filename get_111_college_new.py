@@ -2,57 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pandas as pd
 
-key_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
-# key_list = ['B']
-college_name_list = list()
-department_name_list = list()
-first_step_one_subject_list = list()
-first_step_one_point_list = list()
-first_step_one_ratio_list = list()
-first_step_two_subject_list = list()
-first_step_two_point_list = list()
-first_step_two_ratio_list = list()
-first_step_three_subject_list = list()
-first_step_three_point_list = list()
-first_step_three_ratio_list = list()
-first_step_four_subject_list = list()
-first_step_four_point_list = list()
-first_step_four_ratio_list = list()
-first_step_five_subject_list = list()
-first_step_five_point_list = list()
-first_step_five_ratio_list = list()
-
-second_step_one_ratio_list = list()
-second_step_two_ratio_list = list()
-second_step_three_ratio_list = list()
-second_step_four_ratio_list = list()
-second_step_five_ratio_list = list()
-
-second_step_all_ratio_list = list()
-
-second_step_one_subject_list = list()
-second_step_two_subject_list = list()
-second_step_three_subject_list = list()
-second_step_four_subject_list = list()
-second_step_five_subject_list = list()
-
-second_step_one_point_list = list()
-second_step_two_point_list = list()
-second_step_three_point_list = list()
-second_step_four_point_list = list()
-second_step_five_point_list = list()
-
-second_step_one_all_ratio_list = list()
-second_step_two_all_ratio_list = list()
-second_step_three_all_ratio_list = list()
-second_step_four_all_ratio_list = list()
-second_step_five_all_ratio_list = list()
-
-final_order_list = list()
-
-thing_list = list()
-
-order_select_list = list()
+# key_list = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R']
+key_list = ['A', 'B']
 
 
 def get_information(index, df_in):
@@ -79,7 +30,7 @@ def if_nothing_add_space(word):
 
 discipline_college_url_list_dict = dict()
 for discipline in key_list:
-    df = pd.read_csv(discipline + 'college_id.csv')
+    df = pd.read_csv('college_id_to_combine_url_file/' + discipline + 'college_id.csv')
     college_url_list = list()
     for discipline_number in df['college_id']:
         discipline_number_str = str(discipline_number)
@@ -94,6 +45,55 @@ for discipline in key_list:
 print(discipline_college_url_list_dict)
 
 for discipline, college_url_list in discipline_college_url_list_dict.items():
+    college_name_list = list()
+    department_name_list = list()
+    first_step_one_subject_list = list()
+    first_step_one_point_list = list()
+    first_step_one_ratio_list = list()
+    first_step_two_subject_list = list()
+    first_step_two_point_list = list()
+    first_step_two_ratio_list = list()
+    first_step_three_subject_list = list()
+    first_step_three_point_list = list()
+    first_step_three_ratio_list = list()
+    first_step_four_subject_list = list()
+    first_step_four_point_list = list()
+    first_step_four_ratio_list = list()
+    first_step_five_subject_list = list()
+    first_step_five_point_list = list()
+    first_step_five_ratio_list = list()
+
+    second_step_one_ratio_list = list()
+    second_step_two_ratio_list = list()
+    second_step_three_ratio_list = list()
+    second_step_four_ratio_list = list()
+    second_step_five_ratio_list = list()
+
+    second_step_all_ratio_list = list()
+
+    second_step_one_subject_list = list()
+    second_step_two_subject_list = list()
+    second_step_three_subject_list = list()
+    second_step_four_subject_list = list()
+    second_step_five_subject_list = list()
+
+    second_step_one_point_list = list()
+    second_step_two_point_list = list()
+    second_step_three_point_list = list()
+    second_step_four_point_list = list()
+    second_step_five_point_list = list()
+
+    second_step_one_all_ratio_list = list()
+    second_step_two_all_ratio_list = list()
+    second_step_three_all_ratio_list = list()
+    second_step_four_all_ratio_list = list()
+    second_step_five_all_ratio_list = list()
+
+    final_order_list = list()
+
+    thing_list = list()
+
+    order_select_list = list()
     for url in college_url_list:
         df_url = pd.read_html(url)
         # print(df_url)
@@ -277,6 +277,5 @@ for discipline, college_url_list in discipline_college_url_list_dict.items():
         'thing': thing_list,
         'order_select': order_select_list
     })
-
     print(df_new)
-    df_new.to_csv(discipline + '_college_rule.csv', index=False)
+    df_new.to_csv('college_rule_18_file/' + discipline + '_college_rule.csv', index=False)

@@ -33,9 +33,8 @@ print(discipline_cluster_value_list)
 
 discipline_cluster_value_url = dict()
 
-all_college_id_list = list()
-
 for discipline_cluster_value in discipline_cluster_value_list:
+    all_college_id_list = list()
     # print(discipline_cluster_value_list)
     Select(driver.find_element(By.XPATH, "//*[contains(@name, 'gcode')]")).select_by_value(
         discipline_cluster_value)
@@ -69,7 +68,7 @@ for discipline_cluster_value in discipline_cluster_value_list:
             all_college_id_list_ += re.findall(r'-?\d+\.?\d*', college_id)
     pd.DataFrame({
         'college_id': all_college_id_list_,
-    }).to_csv(discipline_cluster_value + 'college_id.csv', index=False)
+    }).to_csv('college_id_to_combine_url_file/' + discipline_cluster_value + 'college_id.csv', index=False)
 
 # driver.find_element(By.XPATH,
 #                     "//*[contains(@id, 'LPM_form_gsdgroup')]//*[contains(@class, 'btn') and text()='查詢']").click()

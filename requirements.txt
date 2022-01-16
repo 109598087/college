@@ -5,3 +5,4 @@ html5lib
 beautifulsoup4
 Pyside2
 matplotlib
+plotly

@@ -83,11 +83,13 @@ for college_group in key_list:
     # write dict to csv
     with open('care_report_18/' + college_group + '_care_report_without_report_name.csv', 'w') as f:
         writer = csv.writer(f)
+        writer.writerow(['report_id', 'count'])
         for k, v in important_all_report_without_report_name_dict.items():
             writer.writerow([k, v])
 
     important_subject_dict = dict(sorted(important_subject_dict.items(), key=lambda item: item[1], reverse=True))
     with open('care_subject_18/' + college_group + '_care_subject.csv', 'w') as f:
         writer = csv.writer(f)
+        writer.writerow(['subject_id', 'count'])
         for k, v in important_subject_dict.items():
             writer.writerow([k, v])
